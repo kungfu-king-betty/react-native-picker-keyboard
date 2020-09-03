@@ -15,4 +15,3 @@ import PickerKeyboard from 'react-native-picker-keyboard';
 // TODO: What to do with the module?
 PickerKeyboard;
 ```
-# react-native-picker-keyboard

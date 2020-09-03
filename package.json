@@ -1,0 +1,139 @@
+{
+  "name": "react-native-picker-keyboard",
+  "title": "React Native Picker Keyboard",
+  "version": "0.3.0",
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "React native component to use the iOS picker keyboard to make the user interface more fluid",
+  "main": "src/index.js",
+  "files": [
+    "README.md",
+    "android",
+    "index.js",
+    "ios",
+    "src",
+    "react-native-picker-keyboard.podspec"
+  ],
+  "detox": {
+    "test-runner": "jest",
+    "runner-config": "example/e2e/config.json",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/PickerKeyboardExample.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/PickerKeyboardExample.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 11' -scheme PickerKeyboardExample -parallelizeTargets -configuration Debug -derivedDataPath example/ios/build  -UseModernBuildSystem=YES | xcpretty -k",
+        "type": "ios.simulator",
+        "name": "iPhone 11"
+      },
+      "ios.sim.release": {
+        "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/PickerKeyboardExample.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/PickerKeyboardExample.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 11' -scheme PickerKeyboardExample -parallelizeTargets -configuration Release -derivedDataPath example/ios/build  -UseModernBuildSystem=YES | xcpretty -k",
+        "type": "ios.simulator",
+        "name": "iPhone 11"
+      },
+      "android.emu.debug": {
+        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && pushd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && popd",
+        "type": "android.emulator",
+        "name": "TestingAVD"
+      },
+      "android.emu.release": {
+        "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && pushd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && popd",
+        "type": "android.emulator",
+        "name": "TestingAVD"
+      }
+    }
+  },
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ]
+  },
+  "scripts": {
+    "test": "yarn validate:eslint && yarn validate:flow && yarn validate:typescript && yarn test:jest",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "commit": "npm run git-cz",
+    "semantic-release": "semantic-release",
+    "test:detox:android:build:debug": "detox build -c android.emu.debug",
+    "test:detox:android:build:release": "detox build -c android.emu.release",
+    "test:detox:android:bundle:release": "mkdir -p .tmp && react-native bundle --max-workers 4 --platform android --dev false --entry-file example/index.js --bundle-output .tmp/android-bundle.js",
+    "test:detox:android:test:debug": "detox test -c android.emu.debug",
+    "test:detox:android:test:release": "detox test -c android.emu.release",
+    "test:detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build",
+    "test:detox:ios:build:debug": "detox build -c ios.sim.debug",
+    "test:detox:ios:build:release": "detox build -c ios.sim.release",
+    "test:detox:ios:bundle:release": "mkdir -p .tmp && react-native bundle --max-workers 4 --platform ios --dev false --entry-file example/index.js --bundle-output .tmp/ios-bundle.js",
+    "test:detox:ios:test:debug": "detox test -c ios.sim.debug",
+    "test:detox:ios:test:release": "detox test -c ios.sim.release",
+    "test:jest": "jest src/",
+    "validate:eslint": "eslint 'src/**/*.js' 'example/**/*.js'",
+    "validate:flow": "flow check",
+    "validate:typescript": "tsc --project ./"
+  },
+  "private": false,
+  "repository": "https://github.com/kungfu-king-betty/react-native-picker-keyboard",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "picker",
+    "select",
+    "keyboard"
+  ],
+  "author": "Austen Zeh <developerdawg@gmail.com> (https://github.com/kungfu-king-betty)",
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/kungfu-king-betty/react-native-picker-keyboard/issues"
+  },
+  "homepage": "https://github.com/kungfu-king-betty/react-native-picker-keyboard#readme",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.60.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/runtime": "^7.11.2",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "@commitlint/prompt": "^9.1.2",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.0.7",
+    "@semantic-release/npm": "^7.0.5",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "@types/react": "^16.9.49",
+    "@types/react-native": "^0.63.14",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^26.3.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "commitizen": "^4.2.1",
+    "detox": "^17.4.5",
+    "eslint": "^7.8.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "flow-bin": "^0.133.0",
+    "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "jest-circus": "^26.4.2",
+    "metro-react-native-babel-preset": "^0.63.0",
+    "prettier": "2.1.1",
+    "pretty-quick": "^3.0.0",
+    "react": "^16.9.0",
+    "react-native": "^0.61.5",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^17.1.1",
+    "typescript": "^4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "pretty-quick --staged --pattern '**/*.*(js|jsx)' && npm test"
+    }
+  }
+}
