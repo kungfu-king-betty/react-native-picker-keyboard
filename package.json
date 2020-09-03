@@ -1,7 +1,7 @@
 {
   "name": "react-native-picker-keyboard",
   "title": "React Native Picker Keyboard",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "bundleDependencies": false,
   "deprecated": false,
   "description": "React native component to use the iOS picker keyboard to make the user interface more fluid",
@@ -51,6 +51,11 @@
     ]
   },
   "scripts": {
+    "android": "react-native run-android --root example",
+    "ci:publish": "yarn semantic-release",
+    "ios": "cd example && react-native run-ios",
+    "start": "react-native start",
+    "start:windows": "react-native start --projectRoot ./ --use-react-native-windows",
     "test": "yarn validate:eslint && yarn validate:flow && yarn validate:typescript && yarn test:jest",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
