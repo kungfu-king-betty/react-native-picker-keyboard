@@ -61,12 +61,10 @@ workflows:
           build_type: debug
           requires:
             - analyze
-      - rn/ios_build:
-          name: ios_debug_build
-          project_path: example/ios/example.xcworkspace
-          device: iPhone X
-          build_configuration: Debug
-          scheme: example
+      - rn/android_build:
+          name: android_release_build
+          project_path: "example/android"
+          build_type: release
           requires:
             - analyze
       - publish:
