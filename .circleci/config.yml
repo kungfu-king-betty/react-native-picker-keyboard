@@ -64,7 +64,8 @@ workflows:
       - rn/ios_build:
           name: ios_debug_build
           project_path: "example/ios"
-          build_type: debug
+          build_configuration: "debug"
+          scheme: "Debug"
           requires:
             - analyze
       - publish:
