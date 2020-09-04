@@ -5,7 +5,7 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          'react-native-picker-keyboard': './js',
+          'react-native-picker-keyboard': './src',
         },
         cwd: 'babelrc',
       },
