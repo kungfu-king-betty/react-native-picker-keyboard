@@ -79,8 +79,10 @@
     "validate:typescript": "tsc --project ./"
   },
   "private": false,
-  "repository": "https://github.com/kungfu-king-betty/react-native-picker-keyboard",
-  "keywords": [
+  "repository": {
+    "baseUrl": "https://github.com/kungfu-king-betty/react-native-picker-keyboard"
+  },
+    "keywords": [
     "react-native",
     "ios",
     "android",
@@ -88,7 +90,12 @@
     "select",
     "keyboard"
   ],
-  "author": "Austen Zeh <developerdawg@gmail.com> (https://github.com/kungfu-king-betty)",
+  "author": {
+    "username": "kungfu-king-betty",
+    "name": "Austen Zeh",
+    "email": "developerdawg@gmail.com",
+    "url": "https://github.com/kungfu-king-betty)"
+  },
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
