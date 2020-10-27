@@ -1,9 +1,5 @@
-/**
- * to be used by the example app
- */
+import { NativeModules } from 'react-native';
 
-import {AppRegistry} from 'react-native';
-import App from './example/src/App';
-import {name as appName} from './example/app.json';
+const { RNPickerKeyboard } = NativeModules;
 
-AppRegistry.registerComponent(appName, () => App);
+export default RNPickerKeyboard;

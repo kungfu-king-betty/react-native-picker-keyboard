@@ -1,8 +1,8 @@
-/screenshots
-__tests__
-/example
-/e2e
-.travis.yml
-/webpack.config.js
-/app.config.js
-/.expo
+RNPickerKeyboardExample
+ios/Pods
+ios/Podfile
+ios/Podfile.lock
+ios/*.xcodeproj
+ios/*.xcworkspace
+node_modules
+package-lock.json
