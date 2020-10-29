@@ -1,7 +1,7 @@
 {
   "name": "react-native-picker-keyboard",
   "title": "React Native Picker Keyboard",
-  "version": "0.0.1-m",
+  "version": "0.0.1-n",
   "description": "React Native module to allow the use of a native picker within the keyboard instead of as a modal",
   "main": "index.js",
   "scripts": {

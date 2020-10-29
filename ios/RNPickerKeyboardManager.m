@@ -7,7 +7,7 @@ RCT_EXPORT_MODULE()
 
 - (UIView *)view
 {
-  return [RNPickerKeyboard new];
+  return [[RNPickerKeyboard alloc] initWithBridge:self.bridge];
 }
 
 @end

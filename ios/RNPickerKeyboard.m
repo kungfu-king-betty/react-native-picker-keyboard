@@ -1,16 +1,36 @@
 #import "RNPickerKeyboard.h"
 
-@implementation RNPickerKeyboard
+#import <React/RCTBridge.h>
+#import <React/RCTConvert.h>
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTUIManager.h>
+#import <React/RCTUtils.h>
+#import <React/UIView+React.h>
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    UITextField* textF = [[UITextField alloc] initWithFrame:CGRectMake(0,0,200,30)];
-    textF.backgroundColor = [UIColor colorWithRed:0.2 green:0.9 blue:0.5 alpha:0.3];
+#import <React/RCTInputAccessoryView.h>
+#import <React/RCTInputAccessoryViewContent.h>
+#import <React/RCTTextAttributes.h>
+#import <React/RCTTextSelection.h>
 
-    [self addSubview:textF];
-
-    return self;
+@implementation RNPickerKeyboard {
+  __weak RCTBridge *_bridge;
+  __weak RCTEventDispatcher *_eventDispatcher;
 }
+
+- (instancetype)initWithBridge:(RCTBridge *)bridge
+{
+  RCTAssertParam(bridge);
+
+  if (self = [super initWithFrame:CGRectZero]) {
+    _bridge = bridge;
+    _eventDispatcher = bridge.eventDispatcher;
+  }
+
+  return self;
+}
+
+RCT_NOT_IMPLEMENTED(- (instancetype)init)
+RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)decoder)
+RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
 
 @end
