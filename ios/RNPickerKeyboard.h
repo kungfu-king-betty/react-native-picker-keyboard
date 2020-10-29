@@ -1,4 +1,4 @@
-#import <MapKit/MapKit.h>
+#import <UIKit/UIKit.h>
 
-@interface RNPickerKeyboard : MKMapView
+@interface RNPickerKeyboard : UIView
 @end
