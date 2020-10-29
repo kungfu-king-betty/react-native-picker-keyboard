@@ -1,5 +1,4 @@
-import { NativeModules } from 'react-native';
+import { requireNativeComponent } from 'react-native';
 
-const { RNPickerKeyboard } = NativeModules;
-
-export default RNPickerKeyboard;
+// requireNativeComponent automatically resolves 'RNPickerKeyboard' to 'RNPickerKeyboardManager'
+module.exports = requireNativeComponent('RNPickerKeyboard');
