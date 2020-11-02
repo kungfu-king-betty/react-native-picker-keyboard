@@ -1,23 +1,17 @@
-#import <UIKit/UIKit.h>
+#import <React/RCTView.h>
+#import <React/UIView+React.h>
 
-#import <React/RCTBackedTextInputViewProtocol.h>
-#import <React/RCTBackedTextInputDelegate.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RNPickerKeyboard : UITextField <RCTBackedTextInputViewProtocol>
+@interface RNPickerKeyboard : RCTView
 
-- (instancetype)initWithCoder:(NSCoder *)decoder NS_UNAVAILABLE;
+@property (nonatomic, retain) NSMutableArray<NSDictionary *> *selectedComponents;
 
-@property (nonatomic, weak) id<RCTBackedTextInputDelegate> textInputDelegate;
+@property (nonatomic, assign) NSString *seperator;
+@property (nonatomic, retain) NSArray<NSNumber *> *selectedIndex;
 
-@property (nonatomic, assign) BOOL caretHidden;
-@property (nonatomic, assign) BOOL contextMenuHidden;
-@property (nonatomic, assign, readonly) BOOL textWasPasted;
-@property (nonatomic, strong, nullable) UIColor *placeholderColor;
-@property (nonatomic, assign) UIEdgeInsets textContainerInset;
-@property (nonatomic, assign, getter=isEditable) BOOL editable;
-@property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
+@property (nonatomic, copy) RCTBubblingEventBlock onChange;
 
 @end
 

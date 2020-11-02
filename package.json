@@ -1,11 +1,12 @@
 {
   "name": "react-native-picker-keyboard",
   "title": "React Native Picker Keyboard",
-  "version": "0.0.1-o",
+  "version": "0.0.1-p",
   "description": "React Native module to allow the use of a native picker within the keyboard instead of as a modal",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flow": "flow"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "react-native": ">=0.60.0-rc.0 <1.0.x"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-flow": "^7.12.1",
@@ -38,8 +40,11 @@
     "eslint": "^7.12.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-native": "^3.10.0",
+    "flow-bin": "^0.137.0",
     "prettier": "^2.1.2",
+    "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-native": "^0.61.5"
-  }
+  },
+  "dependencies": {}
 }

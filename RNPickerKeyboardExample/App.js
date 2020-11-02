@@ -9,30 +9,24 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
 
-import RNPickerKeyboard from 'react-native-picker-keyboard';
+import PickerKeyboard from 'react-native-picker-keyboard';
 
 export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {text: ''};
-  }
   render() {
     return (
       <View style={styles.container}>
-        <Text>Please enter text</Text>
-        <TextInput
-          style={{margin:10}}
-          multiline={true}
-          placeholder="Type text to display in toast"
-          onChangeText={(text) => this.setState({text})}
+        <PickerKeyboard
+          style={{ width: '90%' }}
+          textAlign={'left'}
+          componentCount={2}
+          placeholder={'Select a test option...'}
+          seperator={' - '}
+          items={[{'label':'Select a test option...', 'value':''}, {'label':'Hello', 'value':'hi'}, {'label':'Bye', 'value':'bye'}, {'label':'Select a test option...', 'value':''}, {'label':'Good', 'value':'good'}, {'label':'Bad', 'value':'bad'}]}
+          selectedIndex={[0, 1]}
+          onChange={(newObj) => {
+            console.log(newObj);
+          }}
         />
-        <Button
-          onPress={() => {RNPickerKeyboard.show(this.state.text)}}
-          title="Show Toast"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-/>
       </View>
     );
   }
@@ -43,6 +37,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
 });
