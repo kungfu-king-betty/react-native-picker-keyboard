@@ -28,11 +28,9 @@
 
 - (void)setIndex:(NSInteger)selectedIndex forComponent:(NSInteger)component
 {
-    NSLog(@"SETTING INDEX");
 //    dispatch_async(dispatch_get_main_queue(), ^{
         [self selectRow:selectedIndex inComponent:component animated:YES];
 //    });
-    NSLog(@"INDEX SET");
 }
 
 #pragma mark - UIPickerViewDataSource protocol

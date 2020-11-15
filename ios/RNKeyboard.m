@@ -1,5 +1,6 @@
 #import "RNKeyboard.h"
 
+#import <React/RCTView.h>
 #import <React/RCTUtils.h>
 #import <React/RCTTextAttributes.h>
 
@@ -16,6 +17,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
+        self.delegate = self;
         // set the default placeholder value
         self.placeholder = @"Select an option...";
         
@@ -28,7 +30,7 @@
         self.rightViewMode = UITextFieldViewModeAlways;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                              selector:@selector(onKeyboardOpen)
+                                              selector:@selector(onFocus)
                                               name:UITextFieldTextDidBeginEditingNotification
                                               object:self];
     }
@@ -36,13 +38,67 @@
     return self;
 }
 
-- (void)onKeyboardOpen
+- (void)onFocus
 {
-    // send a notification that the UIPickerView has a new value
+    // send a notification that the UIPickerView has been focused
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UITextFieldKeyboardIsOpen" object:self];
 }
 
-#pragma mark - Draw Manipulation
+- (void)clearText
+{
+    self.text = @"";
+    // send a notification that the UIPickerView has been cleared
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UITextFieldDidClear" object:self];
+}
+
+- (void)setShowClearButton:(BOOL)showClearButton
+{
+    _showClearButton = showClearButton;
+    
+    if (_showClearButton) {
+        UIView *paddingViewR = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 55, 20)];
+        UIButton* overlayButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [overlayButton setTitle:@"Clear" forState:UIControlStateNormal];
+        [overlayButton addTarget:self action:@selector(clearText)
+                forControlEvents:UIControlEventTouchUpInside];
+        overlayButton.frame = CGRectMake(0, 0, 50, 20);
+        [paddingViewR addSubview:overlayButton];
+        self.rightView = paddingViewR;
+        self.rightViewMode = UITextFieldViewModeAlways;
+    } else {
+        UIView *paddingViewR = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
+        self.rightView = paddingViewR;
+        self.rightViewMode = UITextFieldViewModeAlways;
+    }
+}
+
+#pragma mark - Delegate methods
+- (BOOL)textInputShouldBeginEditing
+{
+    return YES;
+}
+
+- (BOOL)textInputShouldEndEditing
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+//    NSUInteger nextTag = textField.tag + 1;
+//    
+//    UITextField *nextResponder;
+//    
+//    if ((nextResponder = [textField.superview viewWithTag:nextTag])) {
+//        [nextResponder becomeFirstResponder];
+//    } else {
+//        [textField resignFirstResponder];
+//    }
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - Display Manipulation
 - (void)drawRect:(CGRect)rect
 {
     CGRect bounds = [self bounds];

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Dimensions, processColor, StyleSheet, View } from 'react-native';
+import { Dimensions, Platform, processColor, StyleSheet, View } from 'react-native';
 import PickerKeyboardNativeComponent from 'react-native-picker-keyboard/src/PickerKeyboardComponent';
+import PropTypes from 'prop-types';
 
 import type { SyntheticEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import type { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -19,7 +20,7 @@ type PickerKeyboardChangeEventItem = $ReadOnly<{|
 
 type PickerKeyboardChangeEvent = SyntheticEvent<
   $ReadOnly<{|
-    selectedIndexes: $ReadOnlyArray<number>,
+    selectedIndexes: $ReadOnlyArray<number | string>,
     selectedComponents: $ReadOnlyArray<PickerKeyboardChangeEventItem>,
   |}>,
 >;
@@ -99,6 +100,14 @@ class PickerKeyboardComponent extends React.Component<Props, State> {
     });
   };
 
+  _onPrev = (event) => {
+    this.props.onPrev();
+  }
+
+  _onNext = (event) => {
+    this.props.onNext();
+  }
+
   render() {
     return (
       <View style={this.props.style}>
@@ -106,23 +115,38 @@ class PickerKeyboardComponent extends React.Component<Props, State> {
           ref={(picker) => {
             this._picker = picker;
           }}
-          style={[styles.pickerKeyboard, this.props.itemStyle]}
+          style={[(Platform.OS == 'ios') ? styles.pickerKeyboard : styles.pickerKeyboardAndroid, this.props.itemStyle]}
           textAlign={this.props.textAlign}
+          datePicker={this.props.datePicker}
+          dateMode={this.props.dateMode}
+          dateStyle={this.props.dateStyle}
           componentCount={this.props.componentCount}
           placeholder={this.state.placeholder}
           seperator={this.props.seperator}
-          selectedIndex={this.props.selectedIndex}
+          selectedValue={this.props.selectedValue}
           items={this.state.items}
           onChange={this._onChange}
+          onPrev={this.props.onPrev}
+          onNext={this.props.onNext}
+          showClearButton={this.props.showClearButton}
+          inputAccessoryViewShow={this.props.inputAccessoryViewShow}
+          inputAccessoryViewID={this.props.inputAccessoryViewID}
         />
       </View>
     );
   }
 }
 
+PickerKeyboardComponent.propTypes = {
+  items: PropTypes.array.isRequired,
+}
+
 const styles = StyleSheet.create({
   pickerKeyboard: {
     height: 40,
+  },
+  pickerKeyboardAndroid: {
+    height: 50,
   },
 });
 

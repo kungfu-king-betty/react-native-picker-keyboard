@@ -3,9 +3,10 @@
 
 @interface RNPicker : UIPickerView
 
-@property (nonatomic, assign) NSUInteger componentCount;
-
 @property (nonatomic, assign) NSDictionary *selectedOption;
+
+
+@property (nonatomic, assign) NSUInteger componentCount;
 
 @property (nonatomic, copy) NSArray<NSArray<NSDictionary *> *> *items;
 
