@@ -28,9 +28,13 @@
 
 - (void)setIndex:(NSInteger)selectedIndex forComponent:(NSInteger)component
 {
-//    dispatch_async(dispatch_get_main_queue(), ^{
+    if (_items.count > component && _items[component].count < selectedIndex) {
         [self selectRow:selectedIndex inComponent:component animated:YES];
-//    });
+    } else {
+        if (_items.count > component) {
+            [self selectRow:0 inComponent:component animated:YES];
+        }
+    }
 }
 
 #pragma mark - UIPickerViewDataSource protocol
@@ -52,7 +56,6 @@ numberOfRowsInComponent:(NSInteger)component
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component
 {
-    
     return [RCTConvert NSString:_items[component][row][@"label"]];
 }
 // determine the height of the selected option

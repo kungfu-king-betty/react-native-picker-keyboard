@@ -332,48 +332,64 @@
 // function to set the items of the RNPicker
 - (void)setItems:(NSArray<NSDictionary *> *)items
 {
+    
     // initalize the index values to be used in the loop over components
     NSUInteger loopIndex = 0, offsetIndex = 0, endIndex = 0;
     // initalize the arrays to be used in the loop over components
     NSArray<NSArray<NSDictionary *> *> * items_final = [NSArray array];
-    NSArray<NSDictionary *> *test_array = [NSArray array];
-    // loop through the given items while counting the component columns
-    while ((_datePicker && loopIndex < 1) || (!_datePicker && loopIndex < _pickerView.componentCount)) {
-        // start with a copy of the array and exclude any objects already copied
-        test_array = [items subarrayWithRange:NSMakeRange(offsetIndex, items.count-offsetIndex)];
-        // get the offset index of the current blank start option
-        // look for the first option with a blank value for the @value key
-        offsetIndex = [test_array indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop){
-            NSDictionary *itm = (NSDictionary *)obj;
-            return [itm[@"value"] isEqualToString:@""];
-        }];
-        // set the end index for the item copy list
-        // the end index if the second index of a blank value for the @value key
-        endIndex = [test_array indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop){
-            NSDictionary *itm = (NSDictionary *)obj;
-            if (idx > 0) {
+    
+    if (items.count) {
+        NSArray<NSDictionary *> *test_array = [NSArray array];
+        // loop through the given items while counting the component columns
+        while ((_datePicker && loopIndex < 1) || (!_datePicker && loopIndex < _pickerView.componentCount)) {
+            // start with a copy of the array and exclude any objects already copied
+            test_array = [items subarrayWithRange:NSMakeRange(offsetIndex, items.count-offsetIndex)];
+            // get the offset index of the current blank start option
+            // look for the first option with a blank value for the @value key
+            offsetIndex = [test_array indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop){
+                NSDictionary *itm = (NSDictionary *)obj;
                 return [itm[@"value"] isEqualToString:@""];
-            } else {
-                return NO;
+            }];
+            if (offsetIndex == NSNotFound) {
+                offsetIndex = 0;
             }
+            // set the end index for the item copy list
+            // the end index if the second index of a blank value for the @value key
+            endIndex = [test_array indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop){
+                NSDictionary *itm = (NSDictionary *)obj;
+                if (idx > 0) {
+                    return [itm[@"value"] isEqualToString:@""];
+                } else {
+                    return NO;
+                }
+            }];
+            if (endIndex == NSNotFound) {
+                endIndex = (test_array.count > 0) ? test_array.count - 1 : 0;
+            }
+            
+            // copy the items from the array using the offset and end index values as the range
+            NSArray<NSDictionary *> * componentItems = [test_array subarrayWithRange:NSMakeRange(offsetIndex, (endIndex < test_array.count) ? endIndex-offsetIndex : (test_array.count)-offsetIndex)];
+            // add the copied array range as its own array to the final array
+            items_final = [items_final arrayByAddingObject:componentItems];
+            
+            // update the selected component value
+            if (_datePicker) {
+                [_selectedComponents setObject:@{@"date":_selectedValue[loopIndex]} atIndexedSubscript:loopIndex];
+            } else {
+                [_selectedComponents setObject:[componentItems objectAtIndex:[_selectedValue[loopIndex] unsignedIntValue]] atIndexedSubscript:loopIndex];
+            }
+            // update the offset index to the end index for the next itration to
+            // remove the previous objects just copied
+            offsetIndex = endIndex;
+            // increment the loop index
+            loopIndex++;
+        }
+    } else {
+        NSArray<NSDictionary *> *items_temp = [NSArray arrayWithObject:@{ @"label":@"No items to choose from...",
+            @"value":@""
         }];
         
-        // copy the items from the array using the offset and end index values as the range
-        NSArray<NSDictionary *> * componentItems = [test_array subarrayWithRange:NSMakeRange(offsetIndex, (endIndex < test_array.count) ? endIndex-offsetIndex : (test_array.count)-offsetIndex)];
-        // add the copied array range as its own array to the final array
-        items_final = [items_final arrayByAddingObject:componentItems];
-        
-        // update the selected component value
-        if (_datePicker) {
-            [_selectedComponents setObject:@{@"date":_selectedValue[loopIndex]} atIndexedSubscript:loopIndex];
-        } else {
-            [_selectedComponents setObject:[componentItems objectAtIndex:[_selectedValue[loopIndex] unsignedIntValue]] atIndexedSubscript:loopIndex];
-        }
-        // update the offset index to the end index for the next itration to
-        // remove the previous objects just copied
-        offsetIndex = endIndex;
-        // increment the loop index
-        loopIndex++;
+        items_final = [items_final arrayByAddingObject:items_temp];
     }
     // copy the items to the pickerView item list
     _pickerView.items = [items_final copy];
@@ -624,6 +640,7 @@
 // handle when the done button is pressed in the keyboard accessory
 - (void)onDonePress
 {
+    NSLog(@"Done Button Pressed");
     // unfocus the textField
     [_textInputView resignFirstResponder];
 }
