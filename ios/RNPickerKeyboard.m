@@ -364,7 +364,7 @@
                 }
             }];
             if (endIndex == NSNotFound) {
-                endIndex = (test_array.count > 0) ? test_array.count - 1 : 0;
+                endIndex = (test_array.count > 0) ? test_array.count : 0;
             }
             
             // copy the items from the array using the offset and end index values as the range
