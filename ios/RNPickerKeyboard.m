@@ -332,7 +332,6 @@
 // function to set the items of the RNPicker
 - (void)setItems:(NSArray<NSDictionary *> *)items
 {
-    
     // initalize the index values to be used in the loop over components
     NSUInteger loopIndex = 0, offsetIndex = 0, endIndex = 0;
     // initalize the arrays to be used in the loop over components
@@ -347,11 +346,17 @@
             // get the offset index of the current blank start option
             // look for the first option with a blank value for the @value key
             offsetIndex = [test_array indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop){
-                NSDictionary *itm = (NSDictionary *)obj;
-                return [itm[@"value"] isEqualToString:@""];
+                NSDictionary *item = (NSDictionary *)obj;
+                return [item[@"value"] isEqualToString:@""];
             }];
+            // if there is no blank value option, then default the offsetindex to 0 and add
+            // a blank value option
             if (offsetIndex == NSNotFound) {
                 offsetIndex = 0;
+                NSArray* tmp_array = test_array;
+                
+                test_array = [NSArray arrayWithObject:@{@"label":_placeholder, @"value":@""}];
+                test_array = [test_array arrayByAddingObjectsFromArray:tmp_array];
             }
             // set the end index for the item copy list
             // the end index if the second index of a blank value for the @value key
